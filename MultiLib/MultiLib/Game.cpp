@@ -20,6 +20,8 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
 	m_exitGame{false} //when true game will exit
 {
+	setupConnection();
+
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
 }
@@ -99,29 +101,35 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
+	sendCoords();
+	recieveCoords();
+
 	if (m_exitGame)
 	{
 		m_window.close();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (m_window.hasFocus())
 	{
-		m_player.move(0.f, -3.f);
-		m_newPosition += sf::Vector2f(0.f,-3.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		m_player.move(0.f, 3.f);
-		m_newPosition += sf::Vector2f(0.f, 3.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		m_player.move(-3.f, 0.f);
-		m_newPosition += sf::Vector2f(-3.f, 0.f);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		m_player.move(3.f, 0.f);
-		m_newPosition += sf::Vector2f(3.f, 0.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			m_player.move(0.f, -3.f);
+			m_newPosition += sf::Vector2f(0.f, -3.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			m_player.move(0.f, 3.f);
+			m_newPosition += sf::Vector2f(0.f, 3.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			m_player.move(-3.f, 0.f);
+			m_newPosition += sf::Vector2f(-3.f, 0.f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			m_player.move(3.f, 0.f);
+			m_newPosition += sf::Vector2f(3.f, 0.f);
+		}
 	}
 }
 
@@ -169,4 +177,40 @@ void Game::setupSprite()
 	m_otherPlayer.setFillColor(sf::Color::Magenta);
 
 	m_newPosition = m_player.getPosition();
+}
+
+void Game::setupConnection()
+{
+	int connectNum = 0;
+
+	DEBUG_MSG("1 - HOST\n 2 - PEER\n");
+	do {
+		std::cin >> connectNum;
+	} while (connectNum != 1 && connectNum != 2);
+
+	if (connectNum == 1)
+	{
+		DEBUG_MSG(sf::IpAddress::getLocalAddress());
+		m_connector.listenOnPort();
+	}
+	if (connectNum == 2)
+	{
+		std::string listeningPort;
+		DEBUG_MSG("IP ADDRESS: ");
+		std::cin >> listeningPort;
+		m_connector.connectToAddress(listeningPort);
+	}
+}
+
+void Game::sendCoords()
+{
+	sf::Packet send;
+	//DEBUG_MSG("x : " + std::to_string(m_newPosition.x) + " y : " + std::to_string(m_newPosition.y));
+	send << m_newPosition.x << m_newPosition.y;
+	m_connector.trySendPacket(send);
+}
+
+void Game::recieveCoords()
+{
+	m_otherPlayer.setPosition(m_connector.tryRecievePacket());
 }

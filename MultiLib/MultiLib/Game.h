@@ -10,6 +10,7 @@
 /// Don't forget the endif at the bottom
 /// </summary>
 #include <SFML/Graphics.hpp>
+#include "server.hpp"
 
 class Game
 {
@@ -31,6 +32,11 @@ private:
 	void setupFontAndText();
 	void setupSprite();
 
+	void setupConnection();
+
+	void sendCoords();
+	void recieveCoords();
+
 	sf::RenderWindow m_window; // main SFML window
 
 	sf::RectangleShape m_player;
@@ -40,6 +46,7 @@ private:
 
 	bool m_exitGame; // control exiting game
 
+	ServerConnecter m_connector;
 };
 
 #endif // !GAME_HPP
