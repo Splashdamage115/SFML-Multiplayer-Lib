@@ -190,7 +190,6 @@ void Game::setupConnection()
 
 	if (connectNum == 1)
 	{
-		DEBUG_MSG(sf::IpAddress::getLocalAddress());
 		m_connector.listenOnPort();
 	}
 	if (connectNum == 2)
