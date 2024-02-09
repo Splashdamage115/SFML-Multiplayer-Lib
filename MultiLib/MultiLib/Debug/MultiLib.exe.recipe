@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\c00283152\Desktop\SFML-Multiplayer-Lib\MultiLib\Debug\MultiLib.exe</FullPath>
+      <FullPath>C:\Users\david\Desktop\SFML-Multiplayer-Lib\MultiLib\Debug\MultiLib.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\c00283152\Desktop\SFML-Multiplayer-Lib\MultiLib\MultiLib\ASSETS\FONTS\ariblk.ttf</FullPath>
+      <FullPath>C:\Users\david\Desktop\SFML-Multiplayer-Lib\MultiLib\MultiLib\ASSETS\FONTS\ariblk.ttf</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\c00283152\Desktop\SFML-Multiplayer-Lib\MultiLib\MultiLib\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
+      <FullPath>C:\Users\david\Desktop\SFML-Multiplayer-Lib\MultiLib\MultiLib\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

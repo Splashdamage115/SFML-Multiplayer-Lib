@@ -96,20 +96,25 @@ public:
     sf::Vector2f tryRecievePacket()
     {
         sf::Packet reciever;
+        float xPos{ 0.f };
+        float yPos{ 0.f };
         if (m_socket.receive(reciever) == sf::Socket::Done)
         {
             DEBUG_MSG("RECIEVED DATA\n\n");
 
-            float xPos{ 0.f };
-            float yPos{ 0.f };
+            
 
             if (reciever >> xPos >> yPos)
             {
                 DEBUG_MSG("SUCCESSFULLY EXTRACTED DATA\n");
                 return sf::Vector2f(xPos, yPos);
             }
+            DEBUG_MSG_NO_END(xPos);
+            DEBUG_MSG(yPos);
+            DEBUG_MSG("UNSUCCESSFUL\n");
+            return sf::Vector2f(0.f, 0.f);
         }
-        DEBUG_MSG("UNSUCCESSFUL\n");
+        DEBUG_MSG("NO DATA RECIEVED\n");
         return sf::Vector2f(0.f, 0.f);
     }
 
