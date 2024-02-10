@@ -67,8 +67,6 @@ public:
             return false;
         }
 
-        // accept a new connection
-        sf::TcpSocket m_socket;
         if (listener.accept(m_socket) != sf::Socket::Done)
         {
             DEBUG_MSG("ERROR RECIEVING CONNECTION\n");
@@ -82,10 +80,6 @@ public:
     // send packet
     bool trySendPacket(sf::Packet t_packet)
     {
-        float xPos;
-        t_packet >> xPos;
-        DEBUG_MSG(xPos);
-
         while (m_socket.send(t_packet) == sf::Socket::Partial)
             DEBUG_MSG("DIDNT SEND\n");
 
@@ -109,8 +103,6 @@ public:
                 DEBUG_MSG("SUCCESSFULLY EXTRACTED DATA\n");
                 return sf::Vector2f(xPos, yPos);
             }
-            DEBUG_MSG_NO_END(xPos);
-            DEBUG_MSG(yPos);
             DEBUG_MSG("UNSUCCESSFUL\n");
             return sf::Vector2f(0.f, 0.f);
         }
